@@ -1,0 +1,128 @@
+@import "reset";
+@import "variables";
+@import "mixins";
+
+@include scrollbars(0.5em, $darker-grey);
+
+body {
+  font-family: $font-family;
+  font-size: 13px;
+  color: $black;
+}
+
+.board {
+  height: 100vh;
+  background: #03153f url("../images/background.jpg") no-repeat;
+  background-size: cover;
+  padding: 20px 21px;
+}
+
+.container {
+  display: flex;
+  flex-wrap: no-wrap;
+  align-items: flex-start;
+  height: 100%;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  flex-basis: 272px;
+  background: $grey;
+  margin-right: 12px;
+  border-radius: 3px;
+
+  &__title {
+    font-weight: bold;
+    font-size: 13px;
+    line-height: 19px;
+    padding: 8px 12px 12px;
+  }
+}
+
+.cards {
+  padding: 0 12px 0px;
+  overflow: auto;
+}
+
+.card {
+  padding: 8px 12px;
+  background: $white;
+  border-radius: 3px;
+  box-shadow: $shadow;
+  line-height: 19px;
+  margin-bottom: 8px;
+}
+
+.add-new {
+  background: $grey;
+  border-radius: 3px;
+  display: flex;
+  line-height: 43px;
+}
+
+/* Form */
+.form {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 12px 12px;
+
+  &--new-column {
+    padding-top: 12px;
+  }
+
+  &__input {
+    box-shadow: $shadow;
+    border-radius: 3px;
+    border: none;
+    padding: 8px 6px 8px 12px;
+    margin-bottom: 8px;
+
+    &--textarea {
+      resize: none;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+
+.button {
+  padding-top: 0;
+  padding-bottom: 0;
+  cursor: pointer;
+  border: none;
+
+  &--new {
+    background: transparent url("../images/add-icon.svg") no-repeat left 12px center;
+    width: 100%;
+    text-align: left;
+    padding-left: 35px;
+    color: #6B808C;
+  }
+
+  &--submit {
+    background: #39c071;
+    border-radius: 3px;
+    font-weight: bold;
+    line-height: 19px;
+    color: #fff;
+    padding: 7px 8px 4px;
+  }
+
+  &--close {
+    min-height: 15px;
+    min-width: 15px;
+    padding: 0;
+    background: transparent url(../images/close-icon.svg) no-repeat center;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
