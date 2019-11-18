@@ -7,14 +7,23 @@ const kanban = (function () {
     const COLUMN_TITLE_CLASS = 'column__title';
     const CARDS_CLASS = 'cards';
     const CARD_CLASS = 'card';
+
     const ADD_BUTTON_CLASS = 'button--new';
     const ADD_CARD_BUTTON_CLASS = 'button--new-card';
     const ADD_COLUMN_BUTTON_CLASS = 'button--new-column';
+
     const ADD_CARD_FORM_CLASS = 'form--card';
     const ADD_COLUMN_FORM_CLASS = 'form--new-column';
-    const CARD_FORM_SUBMIT_CLASS = 'button--submit';
+   
+    const FORM_SUBMIT_CLASS = 'button--submit';
+    const CARD_FORM_SUBMIT_CLASS = 'button--submit-card';
+    const COLUMN_FORM_SUBMIT_CLASS = 'button--submit-column';
+
+    const FORM_CLOSE_CLASS = 'button--close';
+    const CARD_FORM_CLOSE_CLASS = 'button--close-card';
+    const COLUMN_FORM_CLOSE_CLASS = 'button--close-column';
+
     const CARD_FORM_INPUT_CLASS = 'form__input';
-    const CARD_FORM_CLOSE_CLASS = 'button--close';
 
 
     function getButtonTemplate(text) {
@@ -26,16 +35,16 @@ const kanban = (function () {
     let addNewCardForm = `<form action="" class="form form--card hidden">
         <textarea class="form__input" rows="3" placeholder="Введите название карточки"></textarea>
         <div class="form__buttons">
-            <button type="button" class="button button--submit">Добавить карточку</button>
-            <button type="button" class="button button--close"></button>
+            <button type="button" class="button button--submit button--submit-card">Добавить карточку</button>
+            <button type="button" class="button button--close button--close-card"></button>
         </div>
     </form>`;
 
     let addNewColumn = `<form action="" class="form form--new-column hidden">
         <input class="form__input" placeholder="Введите название колонки">
         <div class="form__buttons">
-            <button type="button" class="button button--submit">Добавить колонку</button>
-            <button type="button" class="button button--close"></button>
+            <button type="button" class="button button--submit button--submit-column">Добавить колонку</button>
+            <button type="button" class="button button--close button--close-column"></button>
         </div>
     </form>`;
 
@@ -86,24 +95,25 @@ const kanban = (function () {
             if (e.target.classList.contains(CARD_FORM_CLOSE_CLASS)) hideCardForm(e.target)
             if (e.target.classList.contains(CARD_FORM_SUBMIT_CLASS)) submitCardForm(e.target)
             if (e.target.classList.contains(ADD_COLUMN_BUTTON_CLASS)) showColumnForm(e.target)
+            if (e.target.classList.contains(COLUMN_FORM_CLOSE_CLASS)) hideColumnForm(e.target)
         });
     }
 
-    function showCardForm(target) {
-        let form = target.closest('.' + COLUMN_CLASS).querySelector('.' + ADD_CARD_FORM_CLASS);
+    function showCardForm(button) {
+        let form = button.closest('.' + COLUMN_CLASS).querySelector('.' + ADD_CARD_FORM_CLASS);
         form.classList.remove('hidden');
-        target.classList.add('hidden');
+        button.classList.add('hidden');
     }
 
-    function hideCardForm(target) {
-        let column = target.closest('.' + COLUMN_CLASS);
+    function hideCardForm(button) {
+        let column = button.closest('.' + COLUMN_CLASS);
         let form = column.querySelector('.' + ADD_CARD_FORM_CLASS);
         form.classList.add('hidden');
         column.querySelector('.' + ADD_CARD_BUTTON_CLASS).classList.remove('hidden');
     }
 
-    function submitCardForm(submitButton) {
-        let column = submitButton.closest('.' + COLUMN_CLASS);
+    function submitCardForm(button) {
+        let column = button.closest('.' + COLUMN_CLASS);
         let input = column.querySelector('.' + CARD_FORM_INPUT_CLASS);
 
         if (input.value.trim().length > 0) {
@@ -112,11 +122,20 @@ const kanban = (function () {
         }
     }
 
-    function showColumnForm(target) {
-        let form = target.closest('.' + COLUMN_CLASS).querySelector('.' + ADD_COLUMN_FORM_CLASS);
+    function showColumnForm(button) {
+        let form = button.closest('.' + COLUMN_CLASS).querySelector('.' + ADD_COLUMN_FORM_CLASS);
         form.classList.remove('hidden');
-        target.classList.add('hidden');
+        button.classList.add('hidden');
         appendNewColumnButton();
+    }
+
+    function hideColumnForm(button) {
+        let column = button.closest('.' + COLUMN_CLASS);
+        column.parentNode.removeChild(column);
+    }
+
+    function submitColumnForm() {
+
     }
 
     function appendNewColumnButton() {
@@ -125,6 +144,7 @@ const kanban = (function () {
         column.insertAdjacentHTML('beforeend', getButtonTemplate("Добавить еще одну колонку"));
         column.insertAdjacentHTML('beforeend', addNewColumn);
         column.querySelector('.'+ADD_BUTTON_CLASS).classList.add(ADD_COLUMN_BUTTON_CLASS);
+        column.querySelector('.'+FORM_CLOSE_CLASS).classList.add(COLUMN_FORM_CLOSE_CLASS);
         app.appendChild(column);
     }
 
@@ -137,6 +157,5 @@ const kanban = (function () {
     }
 
 })();
-
 
 kanban.init();
