@@ -7,8 +7,11 @@ const kanban = (function () {
     const COLUMN_TITLE_CLASS = 'column__title';
     const CARDS_CLASS = 'cards';
     const CARD_CLASS = 'card';
-    const ADD_CARD_BUTTON_CLASS = 'button--new';
+    const ADD_BUTTON_CLASS = 'button--new';
+    const ADD_CARD_BUTTON_CLASS = 'button--new-card';
+    const ADD_COLUMN_BUTTON_CLASS = 'button--new-column';
     const ADD_CARD_FORM_CLASS = 'form--card';
+    const ADD_COLUMN_FORM_CLASS = 'form--new-column';
     const CARD_FORM_SUBMIT_CLASS = 'button--submit';
     const CARD_FORM_INPUT_CLASS = 'form__input';
     const CARD_FORM_CLOSE_CLASS = 'button--close';
@@ -28,7 +31,7 @@ const kanban = (function () {
         </div>
     </form>`;
 
-    let addNewColumn = `<form action="" class="form form--new-column">
+    let addNewColumn = `<form action="" class="form form--new-column hidden">
         <input class="form__input" placeholder="Введите название колонки">
         <div class="form__buttons">
             <button type="button" class="button button--submit">Добавить колонку</button>
@@ -71,6 +74,7 @@ const kanban = (function () {
             // Adding newCard button and form
             column.insertAdjacentHTML('beforeend', getButtonTemplate("Добавить еще одну карточку"));
             column.insertAdjacentHTML('beforeend', addNewCardForm);
+            column.querySelector('.'+ADD_BUTTON_CLASS).classList.add(ADD_CARD_BUTTON_CLASS);
 
             app.appendChild(column);
         });
@@ -81,6 +85,7 @@ const kanban = (function () {
             if (e.target.classList.contains(ADD_CARD_BUTTON_CLASS)) showCardForm(e.target)
             if (e.target.classList.contains(CARD_FORM_CLOSE_CLASS)) hideCardForm(e.target)
             if (e.target.classList.contains(CARD_FORM_SUBMIT_CLASS)) submitCardForm(e.target)
+            if (e.target.classList.contains(ADD_COLUMN_BUTTON_CLASS)) showColumnForm(e.target)
         });
     }
 
@@ -107,11 +112,19 @@ const kanban = (function () {
         }
     }
 
+    function showColumnForm(target) {
+        let form = target.closest('.' + COLUMN_CLASS).querySelector('.' + ADD_COLUMN_FORM_CLASS);
+        form.classList.remove('hidden');
+        target.classList.add('hidden');
+        appendNewColumnButton();
+    }
+
     function appendNewColumnButton() {
         let column = document.createElement('div');
         column.classList.add(COLUMN_CLASS);
         column.insertAdjacentHTML('beforeend', getButtonTemplate("Добавить еще одну колонку"));
         column.insertAdjacentHTML('beforeend', addNewColumn);
+        column.querySelector('.'+ADD_BUTTON_CLASS).classList.add(ADD_COLUMN_BUTTON_CLASS);
         app.appendChild(column);
     }
 
