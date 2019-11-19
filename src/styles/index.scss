@@ -4,22 +4,23 @@
 
 @include scrollbars(0.5em, $darker-grey);
 
-body {
+.board {
   font-family: $font-family;
   font-size: 13px;
   color: $black;
-}
-
-.board {
   height: 100vh;
   background: #03153f url("../images/background.jpg") no-repeat;
+  background-position: center center;
   background-size: cover;
-  padding: 20px 21px;
+  background-attachment: fixed;
+  overflow-x: auto;
 }
 
 .container {
-  display: flex;
-  flex-wrap: no-wrap;
+  display: inline-flex;
+  flex-direction: row;
+  padding: 20px 21px;
+  flex-wrap: nowrap;
   align-items: flex-start;
   height: 100%;
 }
@@ -29,9 +30,13 @@ body {
   flex-direction: column;
   max-height: 100%;
   flex-basis: 272px;
+  min-width: 272px;
   background: $grey;
-  margin-right: 12px;
   border-radius: 3px;
+
+  &:not(:last-of-type) {
+    margin-right: 12px;
+  }
 
   &__title {
     font-weight: bold;
