@@ -24,6 +24,7 @@ const kanban = (function () {
     const COLUMN_FORM_CLOSE_CLASS = 'button--close-column';
 
     const CARD_FORM_INPUT_CLASS = 'form__input';
+    const COLUMN_FORM_INPUT_CLASS = 'form__input--column';
 
 
     function getButtonTemplate(text) {
@@ -41,7 +42,7 @@ const kanban = (function () {
     </form>`;
 
     let addNewColumn = `<form action="" class="form form--new-column hidden">
-        <input class="form__input" placeholder="Введите название колонки">
+        <input class="form__input form__input--column" placeholder="Введите название колонки">
         <div class="form__buttons">
             <button type="button" class="button button--submit button--submit-column">Добавить колонку</button>
             <button type="button" class="button button--close button--close-column"></button>
@@ -96,6 +97,7 @@ const kanban = (function () {
             if (e.target.classList.contains(CARD_FORM_SUBMIT_CLASS)) submitCardForm(e.target)
             if (e.target.classList.contains(ADD_COLUMN_BUTTON_CLASS)) showColumnForm(e.target)
             if (e.target.classList.contains(COLUMN_FORM_CLOSE_CLASS)) hideColumnForm(e.target)
+            if (e.target.classList.contains(COLUMN_FORM_SUBMIT_CLASS)) submitColumnForm(e.target)
         });
     }
 
@@ -118,6 +120,7 @@ const kanban = (function () {
 
         if (input.value.trim().length > 0) {
             appendCard(input.value.trim(), column.querySelector('.' + CARDS_CLASS));
+            input.value = '';
             hideCardForm(input);
         }
     }
@@ -134,8 +137,18 @@ const kanban = (function () {
         column.parentNode.removeChild(column);
     }
 
-    function submitColumnForm() {
+    function submitColumnForm(button) {
+        let column = button.closest('.' + COLUMN_CLASS);
+        let input = column.querySelector('.' + COLUMN_FORM_INPUT_CLASS);
 
+        if (input.value.trim().length > 0) {
+            //hideColumnForm(button);
+            let newColumn = createColumn(input.value.trim());
+            newColumn.insertAdjacentHTML('beforeend', getButtonTemplate("Добавить еще одну карточку"));
+            newColumn.insertAdjacentHTML('beforeend', addNewCardForm);
+            newColumn.querySelector('.'+ADD_BUTTON_CLASS).classList.add(ADD_CARD_BUTTON_CLASS);
+            app.replaceChild(newColumn, column);
+        }
     }
 
     function appendNewColumnButton() {
