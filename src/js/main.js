@@ -1,5 +1,5 @@
 import { state, actions } from './store';
-import { initDragListeners } from './drag';
+import { initDND } from './drag';
 
 const kanban = (function () {
     const app = document.getElementById('app');
@@ -16,7 +16,6 @@ const kanban = (function () {
     const ADD_CARD_FORM_CLASS = 'form--card';
     const ADD_COLUMN_FORM_CLASS = 'form--new-column';
 
-    const FORM_SUBMIT_CLASS = 'button--submit';
     const CARD_FORM_SUBMIT_CLASS = 'button--submit-card';
     const COLUMN_FORM_SUBMIT_CLASS = 'button--submit-column';
 
@@ -27,7 +26,6 @@ const kanban = (function () {
     const CARD_FORM_INPUT_CLASS = 'form__input';
     const COLUMN_FORM_INPUT_CLASS = 'form__input--column';
 
-    let draggableCard = null;
 
 
     function getButtonTemplate(text) {
@@ -164,46 +162,12 @@ const kanban = (function () {
         app.appendChild(column);
     }
 
-    function initDragListeners() {
-        document.addEventListener("dragstart", onDragStart, false);
-        document.addEventListener("dragend", onDragEnd, false);
-        document.addEventListener("dragenter", onDragEnter, false);
-        document.addEventListener("dragleave", onDragLeave, false);
-        document.addEventListener("dragover", function (e) {e.preventDefault()}, false);
-        document.addEventListener("drop", onDrop, false);
-    }
-
-    function onDragStart(e) {
-        e.target.style.opacity = .5;
-        e.dataTransfer.setData('text/plain', null);
-    }
-
-    function onDragEnd(e) {
-        e.target.style.opacity = "";
-    }
-
-    function onDragEnter(e) {
-        if (e.target.classList.contains("card")) {
-            e.target.style.opacity = .5;
-        }
-    }
-
-    function onDragLeave(e) {
-        if (e.target.classList.contains("card")) {
-            e.target.style.opacity = "";
-        }
-    }
-
-    function onDrop(e) {
-
-    }
-
     return {
         init() {
             createDom();
             addEventListeners();
-            initDragListeners();
             appendNewColumnButton();
+            initDND();
         }
     }
 
