@@ -1,15 +1,15 @@
-# 📦 Webpack Boilerplate
+# 📦 Vanilla JavaScript Trello clone
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) ![David](https://img.shields.io/david/dev/taniarascia/webpack-boilerplate)
+Trello доска на чистом JavaScript
 
-Minimal Webpack 4 boilerplate with Babel, Sass, ESLint, Hot Module Replacement, and development/production optimization.
+Описание:
+- без использования сторонник библиотек;
+- собственная реализация Drag'N'Drop (HTML5 Drag API);
+- хранение карточек и колонок в store (LocalStorage);
+- использование SASS-препроцессора;
+- именование классов по БЭМ-методологии.
 
-## Installation
-
-```
-git clone git@github.com:taniarascia/webpack-boilerplate
-npm i
-```
+Figma дизайн-макет: https://www.figma.com/file/GRQn8carvWJVsKJeWmIX6Pbr/Kanban
 
 ## Usage
 
@@ -76,7 +76,7 @@ npm run build
 
 ## Author
 
-- [Tania Rascia](https://www.taniarascia.com)
+- [Nikolay Oskin]
 
 ## License
 
