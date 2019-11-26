@@ -2,16 +2,21 @@
 @import "variables";
 @import "mixins";
 
-@include scrollbars(1em, #A9ADB0);
+@include scrollbars(1em, #a9adb0);
 
 .board {
   font-family: $font-family;
   font-size: 13px;
   color: $black;
   height: 100vh;
-  background: #03153f url("../images/background.jpg") no-repeat;
+  background-color: #03153f;
+  background-image: url("../images/background.jpg");
+  background-size: 100% 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-repeat: no-repeat;
   background-position: center center;
-  background-size: cover;
   background-attachment: fixed;
   overflow-x: auto;
 }
@@ -50,7 +55,7 @@
   padding: 0 12px 0px;
   overflow: auto;
   &::-webkit-scrollbar {
-    width:  0.5em;
+    width: 0.5em;
     height: 0.5em;
   }
 }
