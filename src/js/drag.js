@@ -4,7 +4,6 @@ let draggableCard = null;
 function onDragStart(e) {
     e.target.style.opacity = .5;
     draggableCard = e.target;
-    e.dataTransfer.setData('text/plain', null);
 }
 
 function onDragEnd(e) {

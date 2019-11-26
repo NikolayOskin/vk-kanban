@@ -1,5 +1,8 @@
 import { state, actions } from './store';
 import { initDND } from './drag';
+import { polyfillsInit } from './polyfill';
+
+polyfillsInit();
 
 const kanban = (function () {
     const app = document.getElementById('app');
